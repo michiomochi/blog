@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>LaravelでIDE補完を有効にする</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <h2>LaravelでIDE補完を有効にする</h2>
+<p class="meta">10 Nov 2013</p>
+
+<div class="post">
+    <img src="/img/laravel-logo.png" alt="LaravelでIDE補完を有効にする"/>
+    <p>補完が無いIDEなんてIDEの意味ないじゃない。<br>
+ということで今流行りのLaravelでIDE補完機能を有効にする設定を行います。<br>
+当方PhpStormを使用していますがEclipse等でも同じやり方で補完がきくようになるはずです。</p>
+
+<p>ではやっていきます。<br>
+Laravel IDE Helper Generatorなる便利なものがあるのでこちらを使用します。<br>
+<a href="https://github.com/Barryvdh/laravel-ide-helper">Laravel IDE Helper Generator</a></p>
+
+<p>最近はComposerを使用するのがナウいようなのでcomposerを使用してLaravel IDE Helperを導入します。<br>
+LaravelをComposerで導入した人はすでにComposerが入っていると思いますが、まだ入っていないよーという人はComposerの公式ページ通りやってくださいな。curlで取ってきて実行するだけです。<br>
+<a href="http://getcomposer.org/doc/00-intro.md">Composer</a></p>
+
+<p>ではではcomposer.jsonに下記を記載しましょう。<br>
+composer.jsonはすでにLaravelプロジェクトディレクトリにあるはずなのでそちらに追記する形にしましょう。</p>
+
+<p>LaravelでIDE補完を有効にする</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
+    &quot;require&quot;: {
+        // ↓下記を追加↓
+        &quot;barryvdh/laravel-ide-helper&quot;: &quot;1.*&quot;
+    },
+}
+</code></pre></div>
+<p>追記が完了したらcomposer updateを実行します。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">% composer update
+</code></pre></div>
+<p>Composerをグローバルに置いていない方は↓のような実行方法になるかもしれません。適宜実行してください。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">% php composer.phar update
+</code></pre></div>
+<p>composer updateが完了したらvendorディレクトリ以下にbarryvdh/laravel-ide-helperというディレクトリが作成されていればここまで問題なしです。</p>
+
+<p>次にlaravelの設定ファイルapp/config/app.phpのservice providerの箇所に追記をします。</p>
+
+<p>app/config/app.php</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&#39;providers&#39; =&gt; array(
+    // ↓ 下記を追記 ↓
+    &#39;Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider&#39;,
+),
+</code></pre></div>
+<p>service providerに追記箇所を追記したらLarabelのコマンドラインツールのartisanを使用してIDE補完に使うファイルを生成します。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">% php artisan ide-helper:generate
+</code></pre></div>
+<p>_ide_helper.phpというファイルが生成されていれば完了です。<br>
+これで補完がきくようになります。</p>
+
+<p>チームで開発などをしている場合はcomposer.jsonファイルに下記のように記載をしてcommitしてあげると他の人がLaravel IDE Helperをいれる場合にcomposer updateをするだけで入るので便利です。</p>
+
+<p>composer.json</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
+    &quot;scripts&quot;:{
+            &quot;post-update-cmd&quot;:[
+            // ↓ 下記を追記 ↓
+                    &quot;php artisan ide-helper:generate&quot;,
+                    &quot;php artisan optimize&quot;,
+            ]
+    },
+}
+</code></pre></div>
+<p>これでじゃかじゃか補完を使用して開発しましょう。</p>
+
+
+    <div class="post-pagination">
+        <ul>
+            
+            <li>
+                <a href="/tmux_in_mac">前回の記事: Macにtmuxを導入する</a>
+            </li>
+            
+
+            
+            <li>
+                <a href="/rbenv_in_centos">次回の記事: CentOSにrbenvをglobal環境にインストールする</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'michis-note'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

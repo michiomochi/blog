@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CentOSにfluentdを導入</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <h2>CentOSにfluentdを導入</h2>
+<p class="meta">15 Oct 2013</p>
+
+<div class="post">
+    <img src="/img/fluentd-logo.png" alt="CentOSにfluentdを導入"/>
+    <p>環境: CentOS6.4</p>
+
+<p>Documentを参照しながら進めていきます<br>
+<a href="http://fluentd.org">fluentd Document</a></p>
+
+<p>fluentdはgemを使ってインストールも出来るようですが今回はCentOSということもあり、RPMパッケージを使ってインストールしてみたいと思います。<br>
+<a href="http://docs.fluentd.org/articles/install-by-rpm">Installing Fluentd Using rpm Package</a></p>
+
+<h1>Step0: Before Installation(まずやっておくこと)</h1>
+
+<p>Documentに従い、Before Installing fluentdを行う。</p>
+
+<h2>Set Up NTP(ntpサーバーをセットアップ)</h2>
+
+<p>参考サイト: http://centossrv.com/ntp.shtml</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ yum install -y ntp
+</code></pre></div>
+<p>NTP設定</p>
+
+<p>/etc/ntp.conf</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+↓
+restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+
+server 0.centos.pool.ntp.org
+server 1.centos.pool.ntp.org
+server 2.centos.pool.ntp.org
+↓
+# server 0.centos.pool.ntp.org
+# server 1.centos.pool.ntp.org
+# server 2.centos.pool.ntp.org
+
+server ntp.nict.jp # 日本標準時を提供しているNTPサーバー
+server ntp.jst.mfeed.ad.jp # 上記サーバーと直接同期しているNTPサーバー
+</code></pre></div>
+<p>サーバーのタイムゾーンを日本に設定</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cp -p /usr/share/zoneinfo/Japan /etc/localtime
+</code></pre></div>
+<p>NTPサーバー起動時に大幅に時刻がずれているとNTPサーバーが起動できないので、いったん、手動で時刻を合わせる</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ntpdate ntp.nict.jp
+</code></pre></div>
+<p>NTPサーバー起動</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ /etc/rc.d/init.d/ntpd start
+$ chkconfig ntpd on
+</code></pre></div>
+<p>下記のようにサーバー名の左に*がついていれば同期がとれている証拠</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">     remote           refid      st t when poll reach   delay   offset  jitter
+==============================================================================
+*ntp-a3.nict.go. .NICT.           1 u   53   64  177   14.559  -221.38 134.998
++ntp2.jst.mfeed. 133.243.236.19   2 u   18   64  377   14.413  -240.87 154.688
+</code></pre></div>
+<h2>Increase Max # of File Descriptors(File descriptorsの最大値をあげる)</h2>
+
+<p>File Descriptors:<br>
+http://e-words.jp/w/E38395E382A1E382A4E383ABE38387E382A3E382B9E382AFE383AAE38397E382BF.html</p>
+
+<p>現在のFile Descriptorsの最大値を確認</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ulimit -n
+1024
+</code></pre></div>
+<p>1024では宜しくないということなのでDocumentに従い上限をあげる</p>
+
+<p>/etc/security/limits.conf</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># 下記を追加
+root soft nofile 65536
+root hard nofile 65536
+* soft nofile 65536
+* hard nofile 65536
+</code></pre></div>
+<p>そしてサーバーを再起動</p>
+
+<p>上限が上がったか確認</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ulimit -n
+65536
+</code></pre></div>
+<h2>Optimize Network Kernel Parameters(Network Kernelパラメータの最適化)</h2>
+
+<p>sysctl.confファイルをいじることでLinuxはカーネルのチューニングができるようです<br>
+http://sourceforge.jp/magazine/08/09/12/0134255</p>
+
+<p>Documentに従いパラメータを追加します</p>
+
+<p>/etc/sysctl.conf</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">net.ipv4.tcp_tw_recycle = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.ip_local_port_range = 10240    65535
+</code></pre></div>
+<p>設定を反映</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sysctl -w
+</code></pre></div>
+<h1>Step1: Install from rpm Repository(RPMレポジトリからインストール)</h1>
+
+<p>install-redhat.shなるものを使うと自動でtd-agentをインストールしてくれるらしいのでやってみる</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -L http://toolbelt.treasure-data.com/sh/install-redhat.sh | sh
+</code></pre></div>
+<p>td.repoとtd-agentパッケージがあるか確認</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ls /etc/yum.repos.d/
+td.repo
+$ rpm -qa | grep td-agent
+td-agent-1.1.17-0.x86_64
+</code></pre></div>
+<p>ある</p>
+
+<h1>Step2: Launch Daemon(デーモンを開始する)</h1>
+
+<p>Step1で/etc/init.d/td-agentスクリプトが作成されているのでそれを使う</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ sudo /etc/init.d/td-agent start
+Starting td-agent: [  OK  ]
+</code></pre></div>
+<p>start, stop, restart, statusコマンドが使えるそうな</p>
+
+<p>ちなみにconfigファイルは下記ディレクトリ<br>
+/etc/td-agent/td-agent.conf</p>
+
+<h1>Step3: Post Sample Logs via HTTP(HTTP経由でサンプルログを出す)</h1>
+
+<p>デフォルトでログファイルは/var/log/td-agent/td-agent.logにはき出されるようになっています。</p>
+
+<p>Documentに従ってcurlでPOSTリクエストを投げます</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -X POST -d &#39;json={&quot;json&quot;:&quot;message&quot;}&#39; http://localhost:8888/debug.test
+</code></pre></div>
+<p>ログが出てるか確認</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ tail -f /var/log/td-agent/td-agent.log
+2013-10-14 17:56:49 +0000 debug.test: {&quot;json&quot;:&quot;message&quot;}
+</code></pre></div>
+<p>出た</p>
+
+<p>デフォルトの設定はポート8888に向けてJsonかMsgpackのパラメータを含ませたHTTPリクエストを投げるとログに記載されるようです<br>
+これでfluentdが使えるようになったのであとはconfigファイルをカスタマイズするだけです。</p>
+
+<p>Next Stepsという形で各言語などのログを抽出する方法もDocumentに載っているので確認しましょう。</p>
+
+
+    <div class="post-pagination">
+        <ul>
+            
+
+            
+            <li>
+                <a href="/php_logging_by_fluentd">次回の記事: PHPのログをfluentdにて収集</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'michis-note'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

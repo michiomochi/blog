@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>PHPのログをfluentdにて収集</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <h2>PHPのログをfluentdにて収集</h2>
+<p class="meta">16 Oct 2013</p>
+
+<div class="post">
+    <img src="/img/fluentd-logo.png" alt="PHPのログをfluentdにて収集"/>
+    <p>fluentd Document<br>
+<a href="http://docs.fluentd.org/articles/php">Data Import from PHP Applications</a></p>
+
+<p>PHPからログをfluentdにインポートするには「fluent-logger-php」というライブラリを使用します。</p>
+
+<p>fluent-logger-phpはPHP 5.3以上でないと使用することができないので注意です</p>
+
+<p>なにはともあれ、fluentdがインストールされていないとどうにもならないので下記エントリを参考にサクッとfluentdをインストールして下さい<br>
+<a href="http://qiita.com/michiomochi@github/items/1a3cd07497550bc4d5c2">CentOSにfluentdを導入</a></p>
+
+<p>fluentdのconfigファイルを編集し、ログの受取り口を設定します</p>
+
+<p>/etc/td-agent/td-agent.conf</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># fluent-logger-php test用に追記
+&lt;source&gt;
+  type unix
+  path /var/run/td-agent/td-agent.sock
+&lt;/source&gt;
+&lt;match fluentd.test.**&gt;
+  type stdout
+&lt;/match&gt;
+</code></pre></div>
+<p>fluentdを再起動</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ /etc/init.d/td-agent restart
+</code></pre></div>
+<p>fluent-logger-phpをgit cloneしてきます</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git clone https://github.com/fluent/fluent-logger-php.git
+</code></pre></div>
+<p>git cloneしてくるとfluent-logger-phpというディレクトリが生成されるのでそのディレクトリ内にfluent-logger-php-test.phpというファイルを作成し、下記を記載します</p>
+
+<p>fluent-logger-php/fluent-logger-php-test.php</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;?php
+require_once &#39;./src/Fluent/Autoloader.php&#39;;
+use Fluent\Logger\FluentLogger;
+Fluent\Autoloader::register();
+$logger = new FluentLogger(&quot;unix:///var/run/td-agent/td-agent.sock&quot;);
+$logger-&gt;post(&quot;fluentd.test.follow&quot;, array(&quot;from&quot;=&gt;&quot;userA&quot;, &quot;to&quot;=&gt;&quot;userB&quot;));
+</code></pre></div>
+<p>で、fluent-logger-php-test.phpをcuiで実行します</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ php fluent-logger-php-test.php
+</code></pre></div>
+<p>fluentdのログを確認します</p>
+
+<p>/var/log/td-agent/td-agent.log</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">2013-10-16 03:52:12 +0900 fluentd.test.follow: {&quot;from&quot;:&quot;userA&quot;,&quot;to&quot;:&quot;userB&quot;}
+</code></pre></div>
+<p>出た</p>
+
+
+    <div class="post-pagination">
+        <ul>
+            
+            <li>
+                <a href="/fluentd_in_centos">前回の記事: CentOSにfluentdを導入</a>
+            </li>
+            
+
+            
+            <li>
+                <a href="/tmux_in_mac">次回の記事: Macにtmuxを導入する</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'michis-note'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

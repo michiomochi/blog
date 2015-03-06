@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Perl書いたことないけどYAPC:Asia 2014に参加してきた！ 1日目！</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <h2>Perl書いたことないけどYAPC:Asia 2014に参加してきた！ 1日目！</h2>
+<p class="meta">31 Aug 2014</p>
+
+<div class="post">
+    <img src="/img/yapc_asia_2014.png" alt="Perl書いたことないけどYAPC:Asia 2014に参加してきた！ 1日目！"/>
+    <h2>はじめに</h2>
+
+<p>YAPC:Asiaたのしかったーーー！！！<br>
+運営を取り仕切って頂いていた@yusukebeさんを初めとする運営のみなさん本当にありがとうございました&amp;お疲れ様でした！！！<br>
+ブログ半年以上放置していましたが「 ブログを書くまでがYAPC」らしいのでブログ書きますーー！！</p>
+
+<h2>なぜNot Perl Mongerの僕が今回YAPC:Asia 2014に参加したのか</h2>
+
+<p>今回初めてYAPC:Asiaに参加しました。<br>
+大きい勉強会大好きだけどYAPCはPerlの勉強会で僕はPerlを書いたことないので今まで行ったことがありませんでした。</p>
+
+<p>なので当たり前のように今年もスルーしようとしていたら、<br>
+@naoya_itoさんこんなツイートがチラリ。</p>
+
+<blockquote class="twitter-tweet" lang="ja"><p>YAPC なんか Perl の話じゃなくてもいいよって言ったおかげか、めちゃ面白そうな感じになってる <a href="http://t.co/gKYemHPEZO">http://t.co/gKYemHPEZO</a></p>&mdash; Naoya Ito (@naoya_ito) <a href="https://twitter.com/naoya_ito/statuses/485220590710575104">2014, 7月 5</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>ホントかなー。とはいってもYAPCだから半分以上はPerlの話なんだろうなー。<br>
+と思いながら[talk一覧](http://yapcasia.org/2014/talk/list]を見ると半分以上はPerlとは関係ない話でどの話もタイトルがおもしろそうだったので今回は行くかー！となりました。</p>
+
+<h2>YAPC:Asia 1日目</h2>
+
+<p>参加したtalk一覧</p>
+
+<ul>
+<li>インフラエンジニア(狭義)は死んだ - Satoshi Suzuki</li>
+<li><a href="http://www.slideshare.net/dankogai/yapcasia2014-swift">Introducing Swift - and the Sunset of Our Culture?</a> - Dan Kogai</li>
+<li>JSON SchemaとAPIテスト - Naoki Shimizu</li>
+<li>QuizNow! - うずら</li>
+<li>Scala In Perl Company : Hatena - hakobe</li>
+<li><a href="https://speakerdeck.com/tcnksm/komandorainturunituiteyu-rutokinipu-falseyu-rukoto-number-yapcasia">コマンドラインツールについて語るときに僕の語ること</a> - Taichi Nakashima</li>
+<li>DeNAが歩んだデプロイ自動化への道 - 青猫</li>
+<li>WHERE狙いのキー、ORDER BY狙いのキー - yoku0825</li>
+<li><a href="https://docs.google.com/presentation/d/1eyawDBqXlUSS40kVEGYMP79c3xhyNX_VbTJ68ziLJSM/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.p">ウェッブエンジニアのローレベルプログラミング</a> - cho45</li>
+<li>How&#39;s startup life? - working as CTO in Japan - Shohei Kameda</li>
+<li>開発合宿！！！！ - 大西康裕</li>
+</ul>
+
+<h2>印象に残ったtalkの感想</h2>
+
+<h3>インフラエンジニア(狭義)は死んだ - Satoshi Suzuki</h3>
+
+<p>「インフラエンジニアだからアプリケーションはやらない」や「アプリケーションエンジニアだからインフラ周りは触らない」という決めつけはもう辞めよう！という内容。<br>
+僕自身、いつもはRailsを書いているWebエンジニアなのでインフラ周りは後回しに考えがちだなあと反省。<br>
+とりあえず自分が使ってるツールのドキュメントは端から端まで読もうと思います。</p>
+
+<h3>Introducing Swift - and the Sunset of Our Culture? - Dan Kogai</h3>
+
+<p>Appleの新言語swiftについての話。<br>
+swiftを使っていろいろなfizzbuzzの書き方をデモを行いながら話して頂きました。<br>
+僕はiOSアプリを作ったことはないのですが仕事でそろそろiOSアプリから逃げられなくなってきたのでswiftの特性などがよくわかり非常に勉強になりました。</p>
+
+<h3>JSON SchemaとAPIテスト</h3>
+
+<p>最近業務でAPIを作成していることもあり、興味があったので聞きに行きました。<br>
+APIの仕様をJSON Schemaを用いて記載し、それをjson-fuzz-generatorというgemを使用してvalidationテストにも使用する方法などすぐに業務に使用できる内容だったので非常に参考になりました。</p>
+
+<h3>QuizNow! - うずら</h3>
+
+<p>DeNAのQuizNow!というサービスについての話。<br>
+ブラウザにうまいこと画像をキャッシュさせて(hiddenで画像はあらかじめ読み込ませておく)レスポンスの向上を図っていることや、<br>
+クイズの対戦機能をどのように実現しているかなどの話が聞けました。<br>
+Webサービスのレスポンスをどのように向上させるかという問題はWebエンジニアにとって永遠の課題ですね。<br>
+きちんと勉強しなければ！</p>
+
+<h3>Scala In Perl Company : Hatena - hakobe</h3>
+
+<p>Perlが主な言語であるはてなでなぜScalaを選択したのか、Scalaのどこが素敵なのか、どこがイケてないのかという話がきけました。<br>
+Scalaの構文を見てちょっと触りたくなりましたが静的型付け言語はJavaを少しかじったことがあるくらいの僕は触るのにもう少し時間が掛かりそうです。</p>
+
+<h3>コマンドラインツールについて語るときに僕の語ること - Taichi Nakashima</h3>
+
+<ul>
+<li>ショートオプションとロングオプションをつけましょう</li>
+<li>Readmeちゃんと書こう</li>
+<li>破壊的な実行は--forceなどロングオプションで明示的に指定された場合のみ適応するようにしましょう</li>
+</ul>
+
+<p>など、コマンドラインツールを作る時に気をつけるべき点についてお話頂きました。 <br>
+僕も自分だけで使うようにツールを作成する時があるのでそういう時にも意識してオプション等を実装するよう気をつけます。</p>
+
+<h2>まとめ</h2>
+
+<p>スピーカーのみなさんありがとうございました！<br>
+自分の業務に関係があるtalkがかなりあり自分的にすごく勉強になりました。</p>
+
+<p>あとtalkを聞いていて思ったんだけど話す前に資料を公開しておくと自分のPCで見逃したスライドを確認できたりするので先に公開しておくべきだなーと。<br>
+自分が話す時には気をつけようとおもいました。</p>
+
+<p>2日目のブログは明日にでもまとめて書こうと思いますー！</p>
+
+
+    <div class="post-pagination">
+        <ul>
+            
+            <li>
+                <a href="/laravel_routing">前回の記事: Laravelのルーティング書き方まとめ</a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'michis-note'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">{{ site.name }}</a></h1>
+    </div>
+    <div id="main">
+        {{ content }}
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

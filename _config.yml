@@ -1,0 +1,10 @@
+name: michis-note
+markdown: redcarpet
+redcarpet:
+    extensions: ["no_intra_emphasis", "hard_wrap"]
+pygments: true
+permalink: /:title
+exclude: ["vagrant", "config.rb", "sass"]
+baseurl: http://michis-note.com
+timezone: Asia/Tokyo
+paginate: 10

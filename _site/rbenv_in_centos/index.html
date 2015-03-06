@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CentOSにrbenvをglobal環境にインストールする</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <h2>CentOSにrbenvをglobal環境にインストールする</h2>
+<p class="meta">21 Nov 2013</p>
+
+<div class="post">
+    <img src="/img/terminal.png" alt="CentOSにrbenvをglobal環境にインストールする"/>
+    <h2>rbenvとは</h2>
+
+<ul>
+<li>rubyのバージョン管理ツール</li>
+<li>rubyのバージョン切り替えがスムーズにできるようになる</li>
+<li>プロダクトごとにrubyのバージョンが指定できるようになる。 (ex, /var/www/html/1.9以下はruby1.9.3で動かして、/var/www/html/2.0以下はruby2.0.0で動かす等)</li>
+</ul>
+
+<h2>導入</h2>
+
+<p>以下の環境で導入していきます。<br>
+OS: CentOS6.4</p>
+
+<p>rbenvをインストールする前に依存しているPackageをyumでインストールします。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">% rpm -ivh http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+% yum install --enablerepo<span class="o">=</span>epel make gcc zlib-devel openssl-devel readline-devel ncurses-devel gdbm-devel db4-devel libffi-devel tk-devel libyaml-devel
+</code></pre></div>
+<p>globalにインストールするのでrootユーザーで作業します。<br>
+rbenvにinstallコマンドを付与してくれるruby-buildはrbenvのpluginとしてインストールします。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">% su
+% <span class="nb">cd</span> /usr/local
+% git clone git://github.com/sstephenson/rbenv.git rbenv
+% mkdir rbenv/shims rbenv/versions rbenv/plugins
+% git clone git://github.com/sstephenson/ruby-build.git rbenv/plugins/ruby-build
+% groupadd rbenv
+% chgrp -R rbenv rbenv
+% chmod -R g+rwxXs rbenv
+</code></pre></div>
+<p>/etc/profile.d/rbenv.sh</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">RBENV_ROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/rbenv&quot;</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/rbenv/bin:$PATH&quot;</span>
+<span class="nb">eval</span> <span class="s2">&quot;$(rbenv init -)&quot;</span>
+</code></pre></div>
+<h2>rbenvを使用したrubyのインストール</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">% rbenv install --list
+% rbenv install 2.0.0-p247
+% rbenv versions
+* system <span class="o">(</span><span class="nb">set </span>by /usr/local/rbenv/version<span class="o">)</span>
+  2.0.0-p247
+% rbenv global 2.0.0-p247
+  system
+* 2.0.0-p247 <span class="o">(</span><span class="nb">set </span>by /usr/local/rbenv/version<span class="o">)</span>
+% rbenv rehash
+% ruby -v
+ruby 2.0.0p247 <span class="o">(</span>2013-06-27 revision 41674<span class="o">)</span> <span class="o">[</span>x86_64-linux<span class="o">]</span>
+% which ruby
+/usr/local/rbenv/shims/ruby
+</code></pre></div>
+<p>これで終わり。</p>
+
+<h2>最後に</h2>
+
+<p>注意点としてはrubyのバージョンを増やす時はrootユーザで作業すること。<br>
+通常ユーザーで<code>% sudo rbenv install 〜</code>を実行すると<code>/root/.rbenv</code>以下にインストールされてしまうようです。</p>
+
+<p>参考:<br>
+<a href="http://nomnel.net/blog/centos-system-wide-rbenv-and-ruby-build/">CentOSでsystem wideなrbenv+ruby-build環境を構築する</a></p>
+
+
+    <div class="post-pagination">
+        <ul>
+            
+            <li>
+                <a href="/enable_laravel_complement_in_ide">前回の記事: LaravelでIDE補完を有効にする</a>
+            </li>
+            
+
+            
+            <li>
+                <a href="/angularJs_resource">次回の記事: AngularJSを使用してajax通信を行おう</a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'michis-note'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>

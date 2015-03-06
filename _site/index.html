@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html ng-app="michis-note">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>michis-note</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.michis-note.js"></script>
+    <script src="/js/snsCtrl.js"></script>
+
+    <link rel="stylesheet" href="/css/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/ie.css"/>
+
+</head>
+<body>
+
+<div id="site">
+    <div class="header">
+        <h1 class="title"><a href="/">michis-note</a></h1>
+    </div>
+    <div id="main">
+        <div id="top">
+    <h1>Blog Posts</h1>
+    <ul class="post-list">
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/yapc_asia_2014.png">
+            </div>
+            <div class="title">
+                <a href="/yapc_asia_2014_1">Perl書いたことないけどYAPC:Asia 2014に参加してきた！ 1日目！</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/yapc_asia_2014_1')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/yapc_asia_2014_1')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/yapc_asia_2014_1')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/Perl">Perl</a>&nbsp;
+                    
+                    <a href="/tag/YAPC">YAPC</a>&nbsp;
+                    
+                    <a href="/tag/勉強会">勉強会</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    31 Aug 2014
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/laravel-logo.png">
+            </div>
+            <div class="title">
+                <a href="/laravel_routing">Laravelのルーティング書き方まとめ</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/laravel_routing')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/laravel_routing')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/laravel_routing')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/PHP">PHP</a>&nbsp;
+                    
+                    <a href="/tag/Laravel">Laravel</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    17 Dec 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/angularjs-logo.png">
+            </div>
+            <div class="title">
+                <a href="/angularJs_resource">AngularJSを使用してajax通信を行おう</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/angularJs_resource')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/angularJs_resource')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/angularJs_resource')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/JavaScript">JavaScript</a>&nbsp;
+                    
+                    <a href="/tag/AngularJS">AngularJS</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    09 Dec 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/terminal.png">
+            </div>
+            <div class="title">
+                <a href="/rbenv_in_centos">CentOSにrbenvをglobal環境にインストールする</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/rbenv_in_centos')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/rbenv_in_centos')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/rbenv_in_centos')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                    <a href="/tag/Ruby">Ruby</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    21 Nov 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/laravel-logo.png">
+            </div>
+            <div class="title">
+                <a href="/enable_laravel_complement_in_ide">LaravelでIDE補完を有効にする</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/enable_laravel_complement_in_ide')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/enable_laravel_complement_in_ide')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/enable_laravel_complement_in_ide')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/Laravel">Laravel</a>&nbsp;
+                    
+                    <a href="/tag/PHP">PHP</a>&nbsp;
+                    
+                    <a href="/tag/PhpStorm">PhpStorm</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    10 Nov 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/terminal.png">
+            </div>
+            <div class="title">
+                <a href="/tmux_in_mac">Macにtmuxを導入する</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/tmux_in_mac')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/tmux_in_mac')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/tmux_in_mac')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/Mac">Mac</a>&nbsp;
+                    
+                    <a href="/tag/tmux">tmux</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    29 Oct 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/fluentd-logo.png">
+            </div>
+            <div class="title">
+                <a href="/php_logging_by_fluentd">PHPのログをfluentdにて収集</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/php_logging_by_fluentd')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/php_logging_by_fluentd')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/php_logging_by_fluentd')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/fluentd">fluentd</a>&nbsp;
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                    <a href="/tag/PHP">PHP</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    16 Oct 2013
+                </div>
+            </div>
+        </article>
+        
+        <article>
+            <div class="thumbnail">
+                <img src="/img/fluentd-logo.png">
+            </div>
+            <div class="title">
+                <a href="/fluentd_in_centos">CentOSにfluentdを導入</a>
+            </div>
+            <div class="footer">
+                <div class="sns" ng-controller="snsCtrl">
+                    <ul>
+                        <li ng-init="getFacebookCount('/fluentd_in_centos')">
+                            <span class="facebook-icon">F</span>&nbsp;
+                            <span>{[{ fbCount.count }]}</span>
+                        </li>
+                        <li ng-init="getTwitterCount('/fluentd_in_centos')">
+                            <span class="twitter-icon">T</span>&nbsp;
+                            <span>{[{ twCount.count }]}</span>
+                        </li>
+                        <li ng-init="getHatebuCount('/fluentd_in_centos')">
+                            <span class="hatebu-icon">H</span>&nbsp;
+                            <span>{[{ hbCount.count }]}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tag">
+                    <span class="tag-icon">[</span>
+                    
+                    <a href="/tag/fluentd">fluentd</a>&nbsp;
+                    
+                    <a href="/tag/Linux">Linux</a>&nbsp;
+                    
+                </div>
+                <div class="date">
+                    <span class="clock-icon">;</span>
+                    15 Oct 2013
+                </div>
+            </div>
+        </article>
+        
+    </ul>
+</div>
+    </div>
+    <div id="side-bar">
+        <ul>
+            <li>
+                <h3>facebookページ</h3>
+                <div class="fb-like-box" data-href="https://www.facebook.com/michisnote" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer">
+        <div class="contact">
+            <p>
+                道川 雅嘉 - Masayoshi Michikawa<br />
+                プログラミング大好き23歳<br />
+            </p>
+        </div>
+        <div class="contact">
+            <p>
+                <a href="https://github.com/michiomochi">github</a><br />
+                <a href="https://twitter.com/tech_omochi">twitter</a><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+</body>
+</html>
